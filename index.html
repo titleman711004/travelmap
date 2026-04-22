@@ -15,8 +15,6 @@
             --border-color: #dee2e6;
             --accent: #007bff;
             --map-base: #e0e0e0; 
-            
-            /* 設定地圖底色為淡藍色 */
             --map-bg: #aad3df; 
             
             --color-asia: #ff7675;    --color-europe: #74b9ff;  --color-africa: #55efc4;
@@ -135,13 +133,16 @@
     let customNotes = JSON.parse(localStorage.getItem('customNotes')) || {}; 
     let geojsonLayer, layersMap = {};
 
+    // 【修改點】setView 設定為 [25, 10]，縮放層級設為 1.5，讓世界地圖初始時較為居中
     const map = L.map('map', { 
-        zoomSnap: 0.1, minZoom: 1.2, worldCopyJump: false,
-        maxBounds: [[-85, -Infinity], [85, Infinity]], maxBoundsViscosity: 1.0,
+        zoomSnap: 0.1, 
+        minZoom: 1.2, 
+        worldCopyJump: false,
+        maxBounds: [[-85, -Infinity], [85, Infinity]], 
+        maxBoundsViscosity: 1.0,
         attributionControl: false 
-    }).setView([20, 110], 2);
+    }).setView([25, 10], 1.5); 
 
-    // 使用高透明度圖磚，露出下方的淡藍色背景
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', { 
         noWrap: true,
         bounds: [[-90, -180], [90, 180]],
