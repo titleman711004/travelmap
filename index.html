@@ -15,15 +15,23 @@
             --border-color: #dee2e6;
             --accent: #007bff;
             --map-base: #e0e0e0; 
+            
+            /* 設定地圖底色為淡藍色 */
             --map-bg: #aad3df; 
             
             --color-asia: #ff7675;    --color-europe: #74b9ff;  --color-africa: #55efc4;
             --color-northam: #ffe66d; --color-southam: #a29bfe; --color-oceania: #81ecec;
         }
 
-        body, html { margin: 0; padding: 0; height: 100%; background: var(--bg-body); color: var(--text-main); font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; overflow: hidden; transition: 0.3s; }
+        body, html { margin: 0; padding: 0; height: 100%; background: var(--bg-body); color: var(--text-main); font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; overflow: hidden; }
+        
         #app { display: flex; flex-direction: column; height: 100vh; }
-        #map { flex: 3; width: 100%; background-color: var(--map-bg); }
+
+        #map { 
+            flex: 2; 
+            width: 100%; 
+            background-color: var(--map-bg); 
+        }
 
         #dashboard { 
             flex: 1; 
@@ -31,36 +39,56 @@
             border-top: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            padding: 10px 15px;
+            padding: 12px 15px;
             box-sizing: border-box;
-            min-height: 160px;
+            min-height: 220px;
             z-index: 1000; 
         }
 
-        .toolbar { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+        .toolbar { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
         .toolbar h2 { margin: 0; font-size: 1rem; color: var(--accent); white-space: nowrap; letter-spacing: 1px; }
         
-        .action-btn { padding: 4px 10px; cursor: pointer; border-radius: 15px; border: 1px solid var(--accent); background: transparent; color: var(--accent); font-size: 0.65rem; font-weight: bold; transition: 0.2s; }
-        .action-btn:hover { background: var(--accent); color: var(--bg-body); }
+        .action-btn { padding: 5px 12px; cursor: pointer; border-radius: 18px; border: 1px solid var(--accent); background: transparent; color: var(--accent); font-size: 0.75rem; font-weight: bold; white-space: nowrap; transition: 0.2s; }
+        .action-btn:hover { background: var(--accent); color: white; }
         
-        .search-box { flex: 1; background: var(--bg-body); border: 1px solid var(--border-color); padding: 6px 12px; color: var(--text-main); border-radius: 15px; outline: none; font-size: 0.8rem; }
+        .search-box { flex: 1; min-width: 120px; background: var(--bg-body); border: 1px solid var(--border-color); padding: 8px 15px; color: var(--text-main); border-radius: 20px; outline: none; font-size: 0.85rem; }
 
-        #country-list-wrapper { flex: 1; overflow-x: auto; display: flex; align-items: center; }
-        #country-list { display: flex; gap: 10px; list-style: none; margin: 0; padding: 0; height: 85px; }
+        #country-list-wrapper { flex: 1; overflow-y: auto; padding-bottom: 10px; }
 
-        #country-list li { 
-            min-width: 150px; background: var(--bg-body); padding: 10px; border-radius: 10px; 
-            border: 1px solid var(--border-color); position: relative; flex-shrink: 0; cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: center;
+        #country-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); 
+            gap: 10px; 
+            list-style: none; 
+            margin: 0; 
+            padding: 5px 2px; 
         }
 
-        .en-name { font-weight: bold; font-size: 0.8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .zh-display { font-size: 0.7rem; color: var(--accent); margin-top: 4px; }
-        .zh-edit { width: 100%; font-size: 0.7rem; border: none; border-bottom: 1px solid var(--accent); background: transparent; color: var(--accent); outline: none; }
-        .del-btn { position: absolute; right: 6px; top: 6px; color: #ff4d4d; opacity: 0.3; cursor: pointer; font-size: 0.9rem; }
-        .del-btn:hover { opacity: 1; }
+        #country-list li { 
+            background: var(--bg-body); 
+            padding: 12px; 
+            border-radius: 12px; 
+            border: 1px solid var(--border-color); 
+            position: relative; 
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06); 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center;
+        }
 
-        footer { text-align: center; font-size: 0.65rem; color: var(--text-muted); padding: 4px 0; border-top: 1px solid var(--border-color); font-weight: bold; }
+        .en-name { font-weight: bold; font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 18px; }
+        .zh-display { font-size: 0.75rem; color: var(--accent); margin-top: 4px; }
+        .zh-edit { width: 100%; font-size: 0.75rem; border: none; border-bottom: 1px solid var(--accent); background: transparent; color: var(--accent); outline: none; }
+        
+        .del-btn { position: absolute; right: 8px; top: 8px; color: #ff4d4d; opacity: 0.4; font-size: 1rem; width: 20px; height: 20px; text-align: center; line-height: 20px; }
+
+        footer { text-align: center; font-size: 0.65rem; color: var(--text-muted); padding: 8px 0; border-top: 1px solid var(--border-color); font-weight: bold; }
+
+        @media (max-width: 480px) {
+            #country-list { grid-template-columns: repeat(2, 1fr); }
+            #dashboard { flex: 1.5; }
+        }
     </style>
 </head>
 <body>
@@ -70,15 +98,15 @@
     <div id="dashboard">
         <div class="toolbar">
             <h2>🌍 旅遊足跡</h2>
-            
-            <button class="action-btn" onclick="importFromCode()">📥 匯入</button>
-            <button class="action-btn" onclick="exportToCode()">📤 備份</button>
-            
-            <input type="text" class="search-box" id="search-input" placeholder="搜尋國家、特區或備註...">
-            <div style="font-size: 0.75rem;">已造訪: <span id="count" style="font-weight:bold; color:var(--accent);">0</span></div>
+            <button class="action-btn" onclick="importFromCode()">匯入</button>
+            <button class="action-btn" onclick="exportToCode()">備份</button>
+            <input type="text" class="search-box" id="search-input" placeholder="搜尋國家或備註...">
+            <div style="font-size: 0.8rem;">已造訪: <span id="count" style="font-weight:bold; color:var(--accent);">0</span></div>
         </div>
-        <div id="country-list-wrapper"><ul id="country-list"></ul></div>
-        <footer>我的世界旅遊足跡</footer>
+        <div id="country-list-wrapper">
+            <ul id="country-list"></ul>
+        </div>
+        <footer>©Titleman Cloud</footer>
     </div>
 </div>
 
@@ -87,7 +115,7 @@
     const continentMap = {
         "Taiwan": "AS", "Japan": "AS", "South Korea": "AS", "China": "AS", "Thailand": "AS", "Vietnam": "AS", "Philippines": "AS",
         "United Kingdom": "EU", "France": "EU", "Germany": "EU", "Italy": "EU", "Spain": "EU",
-        "United States of America": "NA", "Canada": "NA", "Mexico": "NA"
+        "United States of America": "NA", "Canada": "NA", "Mexico": "NA", "Australia": "OC"
     };
 
     const continentColors = { 
@@ -108,12 +136,21 @@
     let geojsonLayer, layersMap = {};
 
     const map = L.map('map', { 
-        zoomSnap: 0.1, minZoom: 1.5, worldCopyJump: false,
+        zoomSnap: 0.1, minZoom: 1.2, worldCopyJump: false,
         maxBounds: [[-85, -Infinity], [85, Infinity]], maxBoundsViscosity: 1.0,
         attributionControl: false 
-    }).setView([20, 110], 3);
+    }).setView([20, 110], 2);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { noWrap: true, bounds: [[-90, -180], [90, 180]] }).addTo(map);
+    // 使用高透明度圖磚，露出下方的淡藍色背景
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', { 
+        noWrap: true,
+        bounds: [[-90, -180], [90, 180]],
+        opacity: 0.2 
+    }).addTo(map);
+
+    window.addEventListener('resize', () => {
+        setTimeout(() => map.invalidateSize(), 400);
+    });
 
     fetch('https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson')
         .then(res => res.json())
@@ -127,19 +164,14 @@
         specialRegions.forEach(region => {
             const isVisited = visitedCountries.includes(region.name);
             const marker = L.circleMarker([region.lat, region.lng], {
-                radius: 6, fillColor: isVisited ? (continentColors[region.continent] || "#f39c12") : "var(--map-base)",
+                radius: 7, fillColor: isVisited ? (continentColors[region.continent] || "#f39c12") : "var(--map-base)",
                 color: 'var(--border-color)', weight: 1.5, fillOpacity: isVisited ? 0.9 : 0.6
             }).addTo(map);
-
             layersMap[region.name] = marker;
-            marker.on({
-                click: () => toggleCountry(region.name),
-                mouseover: (e) => {
-                    const note = customNotes[region.name];
-                    marker.bindTooltip(note ? `${region.name} (${note})` : region.name, { sticky: true }).openTooltip();
-                    marker.setStyle({ weight: 3, color: 'var(--accent)' });
-                },
-                mouseout: (e) => { updateMapStyles(); }
+            marker.on('click', (e) => { L.DomEvent.stopPropagation(e); toggleCountry(region.name); });
+            marker.on('mouseover', () => {
+                const note = customNotes[region.name];
+                marker.bindTooltip(note ? `${region.name} (${note})` : region.name, { sticky: true }).openTooltip();
             });
         });
     }
@@ -160,10 +192,7 @@
             const marker = layersMap[region.name];
             if(marker) {
                 const isVisited = visitedCountries.includes(region.name);
-                marker.setStyle({
-                    fillColor: isVisited ? (continentColors[region.continent] || "#f39c12") : "var(--map-base)",
-                    fillOpacity: isVisited ? 0.9 : 0.6, weight: 1.5, color: 'var(--border-color)'
-                });
+                marker.setStyle({ fillColor: isVisited ? (continentColors[region.continent] || "#f39c12") : "var(--map-base)", fillOpacity: isVisited ? 0.9 : 0.6 });
             }
         });
     }
@@ -171,14 +200,10 @@
     function onEachFeature(feature, layer) {
         const name = feature.properties.name;
         layersMap[name] = layer;
-        layer.on({
-            click: () => toggleCountry(name),
-            mouseover: (e) => {
-                const note = customNotes[name];
-                layer.bindTooltip(note ? `${name} (${note})` : name, { sticky: true }).openTooltip();
-                layer.setStyle({ weight: 2, color: 'var(--accent)' });
-            },
-            mouseout: (e) => { geojsonLayer.resetStyle(e.target); }
+        layer.on('click', (e) => { L.DomEvent.stopPropagation(e); toggleCountry(name); });
+        layer.on('mouseover', () => {
+            const note = customNotes[name];
+            layer.bindTooltip(note ? `${name} (${note})` : name, { sticky: true }).openTooltip();
         });
     }
 
@@ -190,13 +215,6 @@
         updateUI();
     }
 
-    function flyToLocation(name) {
-        const layer = layersMap[name];
-        if (!layer) return;
-        if (layer.getBounds) map.flyToBounds(layer.getBounds(), { padding: [50, 50] });
-        else if (layer.getLatLng) map.setView(layer.getLatLng(), 8);
-    }
-
     function updateUI() {
         const listEl = document.getElementById('country-list');
         document.getElementById('count').innerText = visitedCountries.length;
@@ -206,84 +224,62 @@
             const note = customNotes[name] || "";
             li.innerHTML = `
                 <span class="en-name">${name}</span>
-                <div class="zh-display" onclick="event.stopPropagation(); startEdit(this, '${name}')">${note || '✎ 點此新增中文或備註'}</div>
+                <div class="zh-display" onclick="event.stopPropagation(); startEdit(this, '${name}')">${note || '✎ 備註'}</div>
                 <span class="del-btn" onclick="event.stopPropagation(); toggleCountry('${name}')">✕</span>
             `;
-            li.onclick = () => flyToLocation(name);
+            li.onclick = () => {
+                const layer = layersMap[name];
+                if (layer.getBounds) map.flyToBounds(layer.getBounds(), { padding: [40, 40] });
+                else if (layer.getLatLng) map.setView(layer.getLatLng(), 8);
+            };
             listEl.appendChild(li);
         });
     }
 
     function startEdit(displayElement, countryName) {
-        const currentText = displayElement.innerText === '✎ 點此新增中文或備註' ? '' : displayElement.innerText;
         const input = document.createElement('input');
         input.className = 'zh-edit';
-        input.value = currentText;
+        input.value = displayElement.innerText === '✎ 備註' ? '' : displayElement.innerText;
         input.onblur = function() {
-            const newText = this.value.trim();
-            if (newText) customNotes[countryName] = newText;
-            else delete customNotes[countryName];
+            const val = this.value.trim();
+            val ? customNotes[countryName] = val : delete customNotes[countryName];
             localStorage.setItem('customNotes', JSON.stringify(customNotes));
             updateUI();
         };
-        input.onkeydown = function(e) { if (e.key === 'Enter') this.blur(); };
+        input.onkeydown = e => { if(e.key === 'Enter') input.blur(); };
         displayElement.replaceWith(input);
         input.focus();
     }
 
-    document.getElementById('search-input').addEventListener('input', function(e) {
+    document.getElementById('search-input').addEventListener('input', e => {
         const val = e.target.value.toLowerCase().trim();
         if(!val) return;
         for (let name in layersMap) {
-            const note = (customNotes[name] || "").toLowerCase();
-            if (name.toLowerCase().includes(val) || note.includes(val)) { flyToLocation(name); break; }
+            if (name.toLowerCase().includes(val) || (customNotes[name] || "").toLowerCase().includes(val)) {
+                const layer = layersMap[name];
+                layer.getBounds ? map.flyToBounds(layer.getBounds()) : map.setView(layer.getLatLng(), 6);
+                break;
+            }
         }
     });
 
-    // ==========================================
-    // 💾 代碼備份核心功能
-    // ==========================================
-    
-    // 匯出成代碼並複製到剪貼簿
     function exportToCode() {
-        const data = {
-            visitedCountries: visitedCountries,
-            customNotes: customNotes
-        };
-        // 轉為 JSON 字串 -> 轉為 Base64 (代碼化)
-        const jsonStr = JSON.stringify(data);
-        const code = btoa(unescape(encodeURIComponent(jsonStr)));
-        
-        navigator.clipboard.writeText(code).then(() => {
-            alert('✅ 備份代碼已成功複製到剪貼簿！\n你可以將這段文字貼到記事本存起來。');
-        }).catch(err => {
-            console.error('複製失敗', err);
-            prompt('無法自動複製，請手動複製下方的備份代碼：', code);
-        });
+        const code = btoa(unescape(encodeURIComponent(JSON.stringify({ visitedCountries, customNotes }))));
+        navigator.clipboard.writeText(code).then(() => alert('✅ 備份代碼已複製！')).catch(() => prompt('複製失敗，代碼如下：', code));
     }
 
-    // 從貼上的代碼匯入資料
     function importFromCode() {
-        const code = prompt('請貼上你的備份代碼：');
+        const code = prompt('請貼上備份代碼：');
         if (!code) return;
-
         try {
-            // Base64 解碼 -> 轉回 JSON
-            const jsonStr = decodeURIComponent(escape(atob(code)));
-            const importedData = JSON.parse(jsonStr);
-            
-            if (importedData.visitedCountries) visitedCountries = importedData.visitedCountries;
-            if (importedData.customNotes) customNotes = importedData.customNotes;
-            
+            const data = JSON.parse(decodeURIComponent(escape(atob(code))));
+            visitedCountries = data.visitedCountries || [];
+            customNotes = data.customNotes || {};
             localStorage.setItem('visitedCountries', JSON.stringify(visitedCountries));
             localStorage.setItem('customNotes', JSON.stringify(customNotes));
-            
-            updateMapStyles();
-            updateUI();
-            alert('✅ 資料匯入成功！');
-        } catch (error) {
-            alert('❌ 備份代碼無效，請確認代碼是否正確。');
-        }
+            updateMapStyles(); updateUI();
+            alert('✅ 匯入成功！');
+        } catch (e) { alert('❌ 代碼無效！'); }
     }
 </script>
 </body>
